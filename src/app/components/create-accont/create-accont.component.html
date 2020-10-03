@@ -1,0 +1,159 @@
+<h3 class="modal-title text-center">Actualice Datos </h3>
+
+
+        <div *ngIf="dataUser!=null" class="modal-body card container ">
+
+
+            <form [formGroup]="UserForm" (ngSubmit)="actualizarUser()">
+        
+                <div class="row">
+                    <div class="col-sm-6 mt-2 pt-5">
+                        <div class="form-group">
+                            <!-- NOmbre y nikname  -->
+                            
+                            <div class="row">
+                
+                                <div class="col-6 pr-1">
+                                    <input type="text" class="form-control" placeholder="Nombre Completo" formControlName="fullname"
+                                        id="fullname"
+                                        [ngClass]="{'is-valid': UserForm.controls.fullname.valid.valueOf(), 'is-invalid': !UserForm.controls.fullname.valid && UserForm.controls.fullname.touched.valueOf()}">
+                                    <div *ngIf="UserForm.controls.fullname.hasError('required')" class="invalid-feedback">
+                                        nombre completo es reqrido
+                                    </div>
+                                </div>
+                
+                
+                                <div class="col-6 pl-1">
+                                    <input type="tex" class="form-control" placeholder="Nickname" formControlName="nickname"
+                                        id="nickname"
+                                        [ngClass]="{'is-valid': UserForm.controls.nickname.valid.valueOf(), 'is-invalid': !UserForm.controls.nickname.valid && UserForm.controls.nickname.touched.valueOf()}">
+                
+                                    <div *ngIf="UserForm.controls.nickname.hasError('required')" class="invalid-feedback">
+                                        Nickname completo es reqrido
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </div>
+        
+                        <div class="form-group ">
+                            <!--E-mail -->
+                
+                            <div class="row">
+                
+                                <div class="col-12">
+                                    <input disabled  type="email" placeholder="Correo electrónico" class="form-control" formControlName="email"
+                                        [ngClass]="{'is-valid': UserForm.controls.email.valid.valueOf(), 'is-invalid': !UserForm.controls.email.valid && UserForm.controls.email.touched.valueOf()}">
+                                    <div *ngIf="UserForm.controls.email.hasError('required')" class="invalid-feedback">
+                                        Correo es reqrido
+                                    </div>
+                                    <div *ngIf="UserForm.controls.email.hasError('email') || UserForm.controls.email.hasError('pattern')"
+                                        class="invalid-feedback">
+                                        Formato de correo icorrecto user@ejemplo.com
+                                    </div>
+                
+                
+                                </div>
+                
+                            </div>
+                        </div>
+                
+                
+               
+                
+                        <div class="form-group">
+                            <!-- Fecha de Nacimiento -->
+                            <div class="input-group">
+                               <p class="text-danger">* Actualizar fecha</p>
+                                <input class="form-control ml-2" placeholder="yyyy-mm-dd" formControlName="birthdate" id="birthdate"
+                                    name="dp" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                            <path
+                                                d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                
+                            </div>
+                            <div *ngIf="UserForm.controls.birthdate.hasError('required')" class="invalid-feedback">
+                                Fecha de nacimiento es reqrido
+                            </div>
+                
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+        
+                            <label>Selecionar imagen de perfil</label>
+                            <hr>
+                            <div class="text-danger">
+                                {{imageError}}
+                            </div>
+                
+                
+                            <div class="custom-file fileInputProfileWrap">
+                                <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" formControlName="image">
+                                <div class="img-space">
+                
+                                    <ng-container *ngIf="isImageSaved; else elseTemplate">
+                                        <img [src]="cardImageBase64 " />
+                                    </ng-container>
+                                    <ng-template #elseTemplate>
+                
+                                        <img src="./../../../assets/img/login/uopload.png" class="img-responsive">
+                                    </ng-template>
+                
+                                </div>
+                
+                            </div>
+                        </div>
+                        <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+                
+
+
+
+
+
+
+
+                        
+                    </div>
+                </div>
+
+
+        
+               
+                <hr>
+                <div class="form-group text-danger ">
+        
+                    * {{advertenciaMensajeRegistro}}
+        
+                </div>
+        
+        
+                <div class=" text-center pt-4 ">
+                    <div class="p-2">
+                        <button type="submit" class="btn btn-success btn-block"
+                            [disabled]="!UserForm.valid  ||  imageError != null ">
+                            <div *ngIf="!sw">Guardar Cambios</div>
+                            <span *ngIf="sw" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        
+                        </button>
+                    </div>
+                </div>
+        
+            </form>
+        </div>
+

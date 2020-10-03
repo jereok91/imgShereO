@@ -1,0 +1,250 @@
+<ng-template #ModalRegistrar let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Registrarte</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+
+        <form [formGroup]="registroUser" (ngSubmit)="registrarUsuario()">
+
+
+            <div class="form-group">
+
+                <!-- NOmbre y nikname  -->
+
+                <div class="row">
+
+                    <div class="col-6 pr-1">
+                        <input type="text" class="form-control" placeholder="Nombre Completo"
+                            formControlName="fullname" id="fullname"
+                            [ngClass]="{'is-valid': registroUser.controls.fullname.valid.valueOf(), 'is-invalid': !registroUser.controls.fullname.valid && registroUser.controls.fullname.touched.valueOf()}">
+                        <div *ngIf="registroUser.controls.fullname.hasError('required')" class="invalid-feedback">
+                            nombre completo es reqrido
+                        </div>
+                    </div>
+
+
+                    <div class="col-6 pl-1">
+                        <input type="tex" class="form-control" placeholder="Nickname" formControlName="nickname" id="nickname"
+                        [ngClass]="{'is-valid': registroUser.controls.nickname.valid.valueOf(), 'is-invalid': !registroUser.controls.nickname.valid && registroUser.controls.nickname.touched.valueOf()}">
+
+                        <div *ngIf="registroUser.controls.nickname.hasError('required')" class="invalid-feedback">
+                            Nickname completo es reqrido
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-group ">
+                <!--E-mail -->
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <input type="email" placeholder="Correo electrónico" class="form-control"
+                            formControlName="email"
+                            [ngClass]="{'is-valid': registroUser.controls.email.valid.valueOf(), 'is-invalid': !registroUser.controls.email.valid && registroUser.controls.email.touched.valueOf()}">
+                        <div *ngIf="registroUser.controls.email.hasError('required')" class="invalid-feedback">
+                            Correo es reqrido
+                        </div>
+                        <div *ngIf="registroUser.controls.email.hasError('email') || registroUser.controls.email.hasError('pattern')"
+                            class="invalid-feedback">
+                            Formato de correo icorrecto user@ejemplo.com
+                        </div>
+
+                      
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <!-- contraseña y cofirmacion de password -->
+                <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="Password" autocomplete="of"
+                    [ngClass]="{'is-valid': registroUser.controls.password.valid.valueOf(), 'is-invalid': !registroUser.controls.password.valid && registroUser.controls.password.touched.valueOf()}">
+                <div *ngIf="registroUser.controls.password.hasError('required')" class="invalid-feedback">
+                    Password es reqrido
+                </div>
+            </div>
+
+            <div class="form-group">
+                <!-- Fecha de Nacimiento -->
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" formControlName="birthdate" id="birthdate" name="dp" ngbDatepicker #d="ngbDatepicker" 
+                   >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"  d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z" />
+                            </svg>
+                        </button>
+                    </div>
+                   
+                </div>
+                <div *ngIf="registroUser.controls.birthdate.hasError('required')" class="invalid-feedback">
+                    Fecha de nacimiento es reqrido
+                </div>
+               
+            </div>
+
+            <div class="form-group">
+
+                <label>Selecionar imagen de perfil</label>
+                <hr>
+                <div class="text-danger">
+                    {{imageError}}
+                </div>
+                
+               
+                <div class="custom-file fileInputProfileWrap">
+                    <input type="file" (change)="fileChangeEvent($event)" class="fileInputProfile" formControlName="image">
+                    <div class="img-space">
+
+                        <ng-container *ngIf="isImageSaved; else elseTemplate" >
+                            <img [src]="cardImageBase64 " />
+                        </ng-container>
+                        <ng-template #elseTemplate>
+
+                            <img src="./../../../assets/img/login/uopload.png" class="img-responsive">
+                        </ng-template>
+
+                    </div>
+
+                </div>
+            </div>
+            <a class="btn btn-danger" (click)="removeImage()" *ngIf="isImageSaved">Remove</a>
+            
+             <hr>
+            <div class="form-group text-danger ">
+                  
+                * {{advertenciaMensajeRegistro}}
+           
+             </div>
+
+
+            <div class=" text-center pt-4 ">
+                <div class="p-2">
+                    <button type="submit" class="btn btn-success btn-block" [disabled]="!registroUser.valid  ||  imageError != null ">
+                        <div *ngIf="!sw">Registrar</div>
+                        <span *ngIf="sw" class="spinner-border spinner-border-sm" role="status"
+                            aria-hidden="true"></span>
+
+                    </button>
+                </div>
+            </div>
+            
+        </form>
+
+        
+
+
+
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+
+<div class=" container">
+
+    <div class="row my-5 align-items-center ">
+        <div class="col-sm-7">
+            <p class="display-4 text-center">Iniciar Sesion </p>
+            <!-- <h1 class="text-center"><small class="text-muted ">Dajanos tus datos</small></h1> -->
+            <form [formGroup]="loginform" (ngSubmit)="login()">
+
+                <div class="form-group ">
+                    <label for="email">E-mail</label>
+                    <input type="email" placeholder="user@ejemplo.com" class="form-control" formControlName="email"
+                        [ngClass]="{'is-valid': loginform.controls.email.valid.valueOf(), 'is-invalid': !loginform.controls.email.valid && loginform.controls.email.touched.valueOf()}">
+                    <div *ngIf="loginform.controls.email.hasError('required')" class="invalid-feedback">
+                        Correo es reqrido
+                    </div>
+                    <div *ngIf="loginform.controls.email.hasError('email') || loginform.controls.email.hasError('pattern')"
+                        class="invalid-feedback">
+                        Formato de correo icorrecto user@ejemplo.com
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" formControlName="password" id="password" autocomplete="of"  
+                        [ngClass]="{'is-valid': loginform.controls.password.valid.valueOf(), 'is-invalid': !loginform.controls.password.valid && loginform.controls.password.touched.valueOf()}">
+                    <div *ngIf="loginform.controls.password.hasError('required')" class="invalid-feedback">
+                        Password es reqrido
+                    </div>
+                </div>
+
+                <div class="form-group text-danger ">
+                  
+                    * {{AdvertenciarevisarLogin}}
+               
+                 </div>
+
+
+                <div class=" text-center pt-4 ">
+                    <div class="p-2">
+                        <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginform.valid">
+                            <div *ngIf="!swLogin">Iniciar Sesión</div>
+                            <span *ngIf="swLogin" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div class="p-2">
+                <button type="submit" class="btn btn-success  btn-block"
+                    (click)="paginaRegistrar(ModalRegistrar)">Registrarse</button>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-5 border-left pb-4">
+
+
+            <p class="h4 text-center text-muted">
+                <small>
+                    Una fotografía para cada momento y un Moneto para cada fotografía
+                </small>
+                <br />
+            </p>
+
+            <div class="text-center  p-2 m-2">
+                <img src="../../../assets/img/login/img1.jpg" alt="Imagen" class="w-25 rounded-circle m-2 ">
+                <img src="../../../assets/img/login/img2.jpg" alt="Imagen" class="w-25 rounded-circle m-2">
+                <img src="../../../assets/img/login/img3.jpg" alt="Imagen" class="w-25 rounded-circle m-2 ">
+            </div>
+            <div class="text-center p-2 m-2">
+                <img src="../../../assets/img/login/img1.jpg" alt="Imagen" class="w-25 rounded-circle m- 2 ">
+                <img src="../../../assets/img/login/img2.jpg" alt="Imagen" class="w-25 rounded-circle m- 2">
+                <img src="../../../assets/img/login/img3.jpg" alt="Imagen" class="w-25 rounded-circle m- 2">
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>

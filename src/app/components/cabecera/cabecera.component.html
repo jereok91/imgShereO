@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top m-0">
+    <a class="btn"  [routerLink]="'/'">
+        <div class=" navbar-brand display-1">
+            ImgShare
+        </div>
+        <img class="p-1 m-o navbar-brand img" src="../../../assets/img/login/uopload.png" width="50" />
+    </a>
+    
+
+
+
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+        &#9776;
+    </button>
+
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse" *ngIf="isloger()" >     
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" [routerLink]="'/'" (click)="isMenuCollapsed = true">Inico</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="'/create-post'" (click)="isMenuCollapsed = true"> Nueva Entrada </a>
+            </li>
+        </ul>
+
+        <div class="my-0 py-0 pr-5 mr-5 ">
+            <button class="btn py-0 text-white " (click)="logout()" type="button">
+               
+                <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                  </svg>
+                <!-- <p class="my-0 py-0">Salir</p> -->
+            </button>
+        </div>
+        
+
+    </div>
+</nav>
